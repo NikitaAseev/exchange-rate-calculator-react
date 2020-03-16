@@ -7,6 +7,78 @@
   pointer-events: none;
 }
 
+* {
+  box-sizing: border-box;
+}
+
+body, html {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+img {
+  max-width: 100%;
+}
+
+.erc {
+  padding: 20px;
+  background-color: #282c34;
+  min-height: 100vh;
+}
+
+.erc-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.erc-header {
+  margin-bottom: 60px;
+  text-align: center;
+}
+
+.erc-header-title {
+  font-size: 50px;
+  font-weight: bold;
+  color: #61DAFB;
+}
+
+.erc-main {
+  text-align: center;
+}
+
+.erc-main-title {
+  margin-bottom: 40px;
+  font-size: 20px;
+  color: #fff;
+}
+
+.erc-main-input {
+  padding: 10px;
+  font-size: 20px;
+  background-color: #fff;
+}
+
+.erc-main-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 600px;
+  margin: 0 auto;
+  margin-bottom: 40px;
+}
+
+.erc-button {
+  padding: 10px 20px;
+  color: rgb(38, 31, 104);
+  background-color: #61DAFB;
+  border-radius: 10px;
+  border: none;
+}
+
+.erc-main-row2-coefficient {
+  color: #61DAFB;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -26,6 +98,25 @@
 
 .App-link {
   color: #61dafb;
+}
+
+@media screen and (max-width: 400px) {
+  .erc-header {
+    margin-bottom: 20px;
+  }
+
+  .erc-header-title {
+    font-size: 30px;
+  }
+
+  .erc-main-title {
+    font-size: 15px;
+  }
+
+  .erc-main-input {
+    padding: 5px;
+    font-size: 10px;
+  }
 }
 
 @keyframes App-logo-spin {
