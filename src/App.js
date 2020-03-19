@@ -1,20 +1,11 @@
 import React from 'react';
 import logo from './logo.svg';
-import './App.css'; 
+import './App.css';
 
 import Select from "./components/Select.js"
-import Swap from "./components/Swap.js"
-import MainInput from "./components/MainInput.js"
-
-function getRate(val) {
-  let url = "https://prime.exchangerate-api.com/v5/362616745a823e3c53fe4dd0/latest/" + val;
-  return fetch(url).then(res => {
-    return res.json().then(data => {
-      let rates = data && data.conversion_rates ? data.conversion_rates : { "USD": 1, "EUR": 0.912211 };
-      return rates;
-    })
-  });
-}
+import Button from "./components/Button.js"
+import Input from "./components/Input.js"
+import getRate from "./utils/getRate.js"
 
 class App extends React.Component {
   constructor(props) {
@@ -37,15 +28,29 @@ class App extends React.Component {
 
   }
 
+  /**
+   * Handles swap button click. 
+   * Swaps cur1 and cur2 state values, 
+   * gets new rates from api and recalculates 
+   * amount2 state value.
+   */
   handleSwapClick() {
     let cur1Copy = this.state.cur1;
+    this.setState({ cur1: this.state.cur2, cur2: cur1Copy });
     getRate(this.state.cur2 + "").then(res => {
       this.setState({ curs: Object.keys(res), rates: res });
       this.setState({ amount2: this.state.amount1 * this.state.rates[this.state.cur2] });
     });
-    this.setState({ cur1: this.state.cur2, cur2: cur1Copy });
   }
 
+  /**
+   * Handles input change. 
+   * Recalculates amount1 and amount2 state values, 
+   * according on the changed input's new value.
+   * 
+   * @param {Event} e 
+   * @param {number} id - Different action is required depending on the id.
+   */
   inputChange(e, id) {
     if (id === 1) {
       this.setState({ amount1: e.target.value });
@@ -56,6 +61,14 @@ class App extends React.Component {
     }
   }
 
+  /**
+   * Handles select changes. 
+   * Gets new rates from api.
+   * Recalculates bottom input's value.
+   * 
+   * @param {event} e 
+   * @param {number} id - Different action is required depending on the id.
+   */
   selectChange(e, id) {
     if (id === 1) {
       this.setState({ cur1: e.target.value });
@@ -87,38 +100,38 @@ class App extends React.Component {
           </div>
 
             </div>
+            <div className="erc-main">
+              <div className="erc-container">
+
+                <div className="erc-main-title">
+                  Chose the currency and the amounts to get the exchange rate
           </div>
 
-          <div className="erc-main">
-            <div className="erc-container">
+                <div className="erc-main-row erc-main-row1">
 
-              <div className="erc-main-title">
-                Chose the currency and the amounts to get the exchange rate
-          </div>
+                  <Select curs={this.state.curs} selected={this.state.cur1} curChange={(e) => { this.selectChange(e, 1); }} />
+                  <Input amount={this.state.amount1} inputChange={(e) => { this.inputChange(e, 1); }} />
 
-              <div className="erc-main-row erc-main-row1">
+                </div>
 
-                <Select curs={this.state.curs} selected={this.state.cur1} curChange={(e) => { this.selectChange(e, 1); }} />
-                <MainInput amount={this.state.amount1} inputChange={(e) => { this.inputChange(e, 1); }} />
+                <div className="erc-main-row erc-main-row2">
 
-              </div>
+                  <Button text="Swap" handleSwapClick={() => { this.handleSwapClick() }} />
+                  <div className="erc-main-row2-coefficient">1 {this.state.cur1} = {this.state.rates[this.state.cur2]} {this.state.cur2}</div>
 
-              <div className="erc-main-row erc-main-row2">
+                </div>
 
-                <Swap handleSwapClick={() => { this.handleSwapClick() }} />
-                <div className="erc-main-row2-coefficient">1 {this.state.cur1} = {this.state.rates[this.state.cur2]} {this.state.cur2}</div>
+                <div className="erc-main-row erc-main-row3">
 
-              </div>
+                  <Select curs={this.state.curs} selected={this.state.cur2} curChange={(e) => { this.selectChange(e, 2); }} />
+                  <Input amount={this.state.amount2} inputChange={(e) => { this.inputChange(e, 2); }} />
 
-              <div className="erc-main-row erc-main-row3">
-
-                <Select curs={this.state.curs} selected={this.state.cur2} curChange={(e) => { this.selectChange(e, 2); }} />
-                <MainInput amount={this.state.amount2} inputChange={(e) => { this.inputChange(e, 2); }} />
+                </div>
 
               </div>
-
             </div>
           </div>
+
 
         </div>
       </div>

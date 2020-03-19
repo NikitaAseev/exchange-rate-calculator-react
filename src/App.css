@@ -27,7 +27,7 @@ img {
 }
 
 .erc-container {
-  max-width: 1200px;
+  max-width: 600px;
   margin: 0 auto;
 }
 
@@ -58,21 +58,32 @@ img {
   background-color: #fff;
 }
 
+.erc-main-input-select {
+  margin-right: 20px;
+}
+
+.erc-main-input-text {
+  width: 100%;
+  max-width: 200px;
+}
+
 .erc-main-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 600px;
-  margin: 0 auto;
+  font-size: 20px;
   margin-bottom: 40px;
 }
 
 .erc-button {
+  margin-right: 20px;
   padding: 10px 20px;
+  font-size: 16px;
   color: rgb(38, 31, 104);
   background-color: #61DAFB;
   border-radius: 10px;
   border: none;
+  cursor: pointer;
 }
 
 .erc-main-row2-coefficient {
@@ -111,11 +122,6 @@ img {
 
   .erc-main-title {
     font-size: 15px;
-  }
-
-  .erc-main-input {
-    padding: 5px;
-    font-size: 10px;
   }
 }
 
