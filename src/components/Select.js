@@ -9,16 +9,16 @@ import React from 'react';
  */
 function Select(props) {
     let propsCopy = { ...props };
-    if (!propsCopy.curs) propsCopy.curs = ["GBP"];
+    if (!propsCopy.curs) propsCopy.curs = ["EUR"];
 
     return (
-        <select className="erc-main-input erc-main-input-select" value={props.selected} onChange={props.curChange}>
-            {
-                propsCopy.curs.map(item => (
-                    <option key={item} value={item}>{item}</option>
-                ))
-            }
-        </select>
+            <select className="erc-main-input erc-main-input-select" value={props.selected} onChange={props.curChange}>
+                {
+                    propsCopy.curs.map(item => (
+                        <option key={item} value={item}>{item}</option>
+                    ))
+                }
+            </select>
     );
 }
 

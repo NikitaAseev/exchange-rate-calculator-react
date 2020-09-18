@@ -1,5 +1,4 @@
-const apiKey = "362616745a823e3c53fe4dd0"; // This is my API key, replace it with yours in production!
-const url = `https://prime.exchangerate-api.com/v5/${apiKey}/latest/`; 
+const url = `https://api.exchangeratesapi.io/latest?base=`; //If you want to learn more about the api visit https://api.exchangeratesapi.io
 
 /**
  * Gets Rates from server.
@@ -10,7 +9,7 @@ const url = `https://prime.exchangerate-api.com/v5/${apiKey}/latest/`;
 function getRate(val) {
     return fetch(url + val).then(res => {
         return res.json().then(data => {
-            let rates = data && data.conversion_rates ? data.conversion_rates : { "USD": 1, "EUR": 0.912211 };
+            let rates = data && data.rates ? data.rates : { "USD": 1, "EUR": 1 };
             return rates;
         })
     });

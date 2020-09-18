@@ -23,9 +23,8 @@ class App extends React.Component {
     }
 
     getRate('USD').then(res => {
-      this.setState({ curs: Object.keys(res), rates: res });
+      this.setState({ curs: [...Object.keys(res)], rates: res, amount2: this.state.amount1 * res[this.state.cur2] });
     });
-
   }
 
   /**
@@ -37,9 +36,9 @@ class App extends React.Component {
   handleSwapClick() {
     let cur1Copy = this.state.cur1;
     this.setState({ cur1: this.state.cur2, cur2: cur1Copy });
-    getRate(this.state.cur2 + "").then(res => {
-      this.setState({ curs: Object.keys(res), rates: res });
-      this.setState({ amount2: this.state.amount1 * this.state.rates[this.state.cur2] });
+    getRate(this.state.cur2).then(res => {
+      this.setState({ curs: [this.state.cur1, ...Object.keys(res)], rates: {EUR: 1, ...res} });
+      this.setState({ amount2: this.state.amount1 * res[cur1Copy] });
     });
   }
 
@@ -74,7 +73,7 @@ class App extends React.Component {
       this.setState({ cur1: e.target.value });
       getRate(e.target.value + "").then(res => {
         console.warn(res);
-        this.setState({ curs: Object.keys(res), rates: res });
+        this.setState({ curs: [e.target.value, ...Object.keys(res)], rates: {EUR: 1, ...res} });
         this.setState({ amount2: this.state.amount1 * this.state.rates[this.state.cur2] });
       });
     } else {
