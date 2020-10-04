@@ -37,7 +37,7 @@ class App extends React.Component {
     let cur1Copy = this.state.cur1;
     this.setState({ cur1: this.state.cur2, cur2: cur1Copy });
     getRate(this.state.cur2).then(res => {
-      this.setState({ curs: [this.state.cur1, ...Object.keys(res)], rates: {EUR: 1, ...res} });
+      this.setState({ curs: [...Object.keys(res)], rates: {EUR: 1, ...res} });
       this.setState({ amount2: this.state.amount1 * res[cur1Copy] });
     });
   }
@@ -47,16 +47,16 @@ class App extends React.Component {
    * Recalculates amount1 and amount2 state values, 
    * according on the changed input's new value.
    * 
-   * @param {Event} e 
-   * @param {number} id - Different action is required depending on the id.
+   * @param {string} value - New amount value
+   * @param {number} id - Input id.
    */
-  inputChange(e, id) {
+  inputChange(value, id) {
     if (id === 1) {
-      this.setState({ amount1: e.target.value });
-      this.setState({ amount2: e.target.value * this.state.rates[this.state.cur2] });
+      this.setState({ amount1: value });
+      this.setState({ amount2: value * this.state.rates[this.state.cur2] });
     } else {
-      this.setState({ amount2: e.target.value });
-      this.setState({ amount1: e.target.value / this.state.rates[this.state.cur2] });
+      this.setState({ amount2: value });
+      this.setState({ amount1: value / this.state.rates[this.state.cur2] });
     }
   }
 
@@ -65,19 +65,19 @@ class App extends React.Component {
    * Gets new rates from api.
    * Recalculates bottom input's value.
    * 
-   * @param {event} e 
-   * @param {number} id - Different action is required depending on the id.
+   * @param {string} value - New currency value
+   * @param {number} id - Select id.
    */
-  selectChange(e, id) {
+  selectChange(value, id) {
+    
     if (id === 1) {
-      this.setState({ cur1: e.target.value });
-      getRate(e.target.value + "").then(res => {
-        console.warn(res);
-        this.setState({ curs: [e.target.value, ...Object.keys(res)], rates: {EUR: 1, ...res} });
+      this.setState({ cur1: value });
+      getRate(value + "").then(res => {
+        this.setState({ curs: [...Object.keys(res)], rates: {EUR: 1, ...res} });
         this.setState({ amount2: this.state.amount1 * this.state.rates[this.state.cur2] });
       });
     } else {
-      this.setState({ cur2: e.target.value, amount2: this.state.amount1 * this.state.rates[e.target.value] });
+      this.setState({ cur2: value, amount2: this.state.amount1 * this.state.rates[value] });
     }
   }
 
@@ -108,8 +108,8 @@ class App extends React.Component {
 
                 <div className="erc-main-row erc-main-row1">
 
-                  <Select curs={this.state.curs} selected={this.state.cur1} curChange={(e) => { this.selectChange(e, 1); }} />
-                  <Input amount={this.state.amount1} inputChange={(e) => { this.inputChange(e, 1); }} />
+                  <Select id={1} curs={this.state.curs} selected={this.state.cur1} curChange={this.selectChange.bind(this)} />
+                  <Input id={1} amount={this.state.amount1} inputChange={this.inputChange.bind(this)} />
 
                 </div>
 
@@ -122,8 +122,8 @@ class App extends React.Component {
 
                 <div className="erc-main-row erc-main-row3">
 
-                  <Select curs={this.state.curs} selected={this.state.cur2} curChange={(e) => { this.selectChange(e, 2); }} />
-                  <Input amount={this.state.amount2} inputChange={(e) => { this.inputChange(e, 2); }} />
+                  <Select id={2} curs={this.state.curs} selected={this.state.cur2} curChange={this.selectChange.bind(this)} />
+                  <Input id={2} amount={this.state.amount2} inputChange={this.inputChange.bind(this)} />
 
                 </div>
 

@@ -8,13 +8,13 @@ import React from 'react';
  * @param {function} props.curChange - onChange handler.
  */
 function Select(props) {
-    let propsCopy = { ...props };
-    if (!propsCopy.curs) propsCopy.curs = ["EUR"];
-
+    // let propsCopy = { ...props };
+    let curs = props.curs || ["EUR"];
+    let selectRef = React.createRef();
     return (
-            <select className="erc-main-input erc-main-input-select" value={props.selected} onChange={props.curChange}>
+            <select ref={selectRef} className="erc-main-input erc-main-input-select" value={props.selected} onChange={() => props.curChange(selectRef.current.value, props.id)}>
                 {
-                    propsCopy.curs.map(item => (
+                    curs.map(item => (
                         <option key={item} value={item}>{item}</option>
                     ))
                 }

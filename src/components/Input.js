@@ -7,8 +7,9 @@ import React from 'react';
  * @param {function} props.inputChange - New input's onChange handler.
  */
 function Input(props) {
+    let inputRef = React.createRef();
     return (
-        <input className="erc-main-input erc-main-input-text" type="number" value={props.amount} onChange={props.inputChange}></input>
+        <input ref={inputRef} className="erc-main-input erc-main-input-text" type="number" value={props.amount} onChange={() => props.inputChange(inputRef.current.value, props.id)}></input>
     )
 }
 
